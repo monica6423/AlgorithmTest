@@ -17,8 +17,31 @@
 //       '### '
 //       '####'
 
-function steps(n) {
 
+//recursion tips:
+//1. identify base case, where do we stop to make a return;
+//2. call function again, making sure the arguments have changed in some fashion
+
+function steps(n, row = 0, stair = '') {
+    if(n === row){
+        return;
+    }
+
+    //if we hit the end of the row, we console log and call step again
+    if(n === stair.length){
+        console.log(stair);
+        //call the steps move on to next row
+        return steps(n, row + 1);
+    }
+
+    if(stair.length <= row){
+        stair += '#';
+    }else{
+        stair += ' '; 
+    }
+
+    //call steps again 
+    steps(n, row, stair);
 }
 
 module.exports = steps;
