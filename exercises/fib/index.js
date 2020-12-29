@@ -8,14 +8,38 @@
 // Example:
 //   fib(4) === 3
 
-function fib(n) {
+function memoize(fn) {
+    const cache = {};
+    return function(...args) {
+        //if we have called slowFib before, we'll look into our cache object
+        //and return that
+        if(cache[args]){
+            return cache[args];
+        }
+
+        const result = fn.apply(this, args);
+        cache[args] = result;
+
+        return result;
+    }
+}
+
+function slowFib(n) {
     //recursive solution
+    //how to solve runtime??
+    //memoization
+    //store the arguments of each function call along with the result.
+    //if the function is called again with the same arguments, return the pre-computed result
+    //rather than calling the function again
+
     if(n < 2){
         return n
     }
 
     return fib(n - 1)+fib(n - 2)
 }
+
+const fib = memoize(slowFib);
 
 module.exports = fib;
 
@@ -32,4 +56,17 @@ module.exports = fib;
 //     }
 
 //     return result[n];
+// }
+
+
+
+// function fib(n) {
+//     //recursive solution
+//    //every increase in n, we are gonna have dramatic increase in function call
+//    //--->exponential runtime complexity
+//     if(n < 2){
+//         return n
+//     }
+
+//     return fib(n - 1)+fib(n - 2)
 // }
